@@ -1,7 +1,7 @@
 #!/bin/bash
 
 arrAnjukeAppServer=(\
-192.168.190.58
+192.168.1.24
 )
 arrHaozuAppServer=(\
 )
@@ -12,6 +12,13 @@ arrJinpuAppServer=(\
 DEV_ALIAS='branch'
 #~ 
 SITES_EXT='anjuke haozu jinpu'
+#~ 从git中checkout的项目文件
+RELEASE_ROOT_TEMP='/home/www/release/temp'
+#~ git仓库
+SITE_ANJUKE_GIT="git@git.corp.anjuke.com:anjuke/v2-site"
+SITE_HAOZU_GIT="git@git.corp.anjuke.com:site/haozu-user"
+SITE_JINPU_GIT="git@git.corp.anjuke.com:site/jinpu-user"
+BRANCH_GIT="git@git.corp.anjuke.com:kyouzhang/user-branch"
 
 
 arrSmokeCityAppServer=(\
