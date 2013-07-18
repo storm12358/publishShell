@@ -9,7 +9,7 @@
 
 ````
 
-####1.创建分支 
+####1.创建分支 [VIEW CODE](http://git.corp.anjuke.com/kyouzhang/publishShell/blob/master/deploy/create_branch.sh)
     create_branch.sh (参数branchName:不带后缀)
     eg. create_branch.sh pmt-15111
 * 加载配置文件common.sh
@@ -18,12 +18,12 @@
 * 切换分支到master,并创建三个分支,${branchName}-anjuke ${branchName}-haozu ${branchName}-jinpu
 * 三个分支push到开发branch:user-branch
 
-####2.开发完成,pg测试:
+####2.开发完成,pg测试 
     publish.sh (参数branchName:不带后缀,[anjuke||haozu||jinpu])
 * 脚本发布到pg环境,界面操作,发布脚本位于pg(/home/www/bin/user-site).
 * 默认将三个分支都发布到pg环境
 
-####3.pg测试完成,分支合并入master 
+####3.pg测试完成,分支合并入master [VIEW CODE](http://git.corp.anjuke.com/kyouzhang/publishShell/blob/master/deploy/git-merge-branch.sh)
     git-merge-branch.sh (branchName:不带后缀,[anjuke,haozu,jinpu]):
 
 * 在代码仓库中切换到master,并作rebase
@@ -34,7 +34,7 @@
 * 删除本地的分支
 * 出现冲突线下解决.然后重新合并入master.
 
-####4.创建新版本 
+####4.创建新版本 [VIEW CODE](http://git.corp.anjuke.com/kyouzhang/publishShell/blob/master/deploy/git-create-new-version.sh)
     git-create-new-version.sh (年_周,序号,[anjuke,haozu,jinpu],[branch],[branchName])
     eg. git-create-new-version.sh 2013_30 01 anjuke,haozu branch pmt-15111
     表示将anjuke和好租 开发环境branch而非mater的代码拉到服务器,并创建版本(2013_30_01)
@@ -45,16 +45,19 @@
 * 代码chekout-index到临时文件目录$RELEASE_ROOT_TEMP/$app,如/home/www/release/temp/anjuke/
 * 如果是master上线,创建tag;
 * 删除分支
-* 调用各个远程服务器的同步脚本rsync-from-deploy.sh (版本,anjuke||haozu||jinpu)
+* 调用各个远程服务器的同步脚本 [VIEW CODE](http://git.corp.anjuke.com/kyouzhang/publishShell/blob/master/server/rsync-from-deploy.sh)
+  * rsync-from-deploy.sh (版本,anjuke||haozu||jinpu)
   * 如果是anjuke,代码同步到/home/www/release/v2/${版本}/
   * 如果是haozu,代码同步到/home/www/release/v2/anjuke-zu/${版本}/
   * 如果是jinpu,代码同步到/home/www/release/v2/anjuke-jp/${版本}/
 
 
 
-####5.发布BETA版本 release-version-beta.sh(版本号,[anjuke,haozu,jinpu]):
+####5.发布BETA版本 [VIEW CODE](http://git.corp.anjuke.com/kyouzhang/publishShell/blob/master/deploy/release-version-beta.sh)
+    release-version-beta.sh(版本号,[anjuke,haozu,jinpu]):
     
-* 调用各个服务器的shell脚本release-version-beta.sh(版本号,anjuke||haozu||jinpu),
+* 调用各个服务器的shell脚本 [VIEW CODE](http://git.corp.anjuke.com/kyouzhang/publishShell/blob/master/server/release-version-beta.sh)
+    * release-version-beta.sh(版本号,anjuke||haozu||jinpu),
     * 版本号写入/home/www/conf/RELEASE_VERSION
     * 或/home/www/config/machine/HZ_RELEASE_VERSION
     * 或/home/www/config/machine/JP_RELEASE_VERSION
@@ -67,27 +70,25 @@
 
 
 #### TODO
-common.sh 增加:
-```
-arrAnjukeAppServer=(\
-)
-arrHaozuAppServer=(\
-)
-arrJinpuAppServer=(\
-)
-#~ 别名
-DEV_ALIAS='branch'
-#~ 
-SITES_EXT='anjuke haozu jinpu'
-#~ 从git中checkout的项目文件
-RELEASE_ROOT_TEMP='/home/www/release/temp'
-SITE_ANJUKE_GIT="git@git.corp.anjuke.com:anjuke/v2-site"
-SITE_HAOZU_GIT="git@git.corp.anjuke.com:site/haozu-user"
-SITE_JINPU_GIT="git@git.corp.anjuke.com:site/jinpu-user"
-BRANCH_GIT="git@git.corp.anjuke.com:kyouzhang/user-branch"
-```
+######common.sh 增加:
+    arrAnjukeAppServer=(\
+    )
+    arrHaozuAppServer=(\
+    )
+    arrJinpuAppServer=(\
+    )
+    #~ 别名
+    DEV_ALIAS='branch'
+    #~ 
+    SITES_EXT='anjuke haozu jinpu'
+    #~ 从git中checkout的项目文件
+    RELEASE_ROOT_TEMP='/home/www/release/temp'
+    SITE_ANJUKE_GIT="git@git.corp.anjuke.com:anjuke/v2-site"
+    SITE_HAOZU_GIT="git@git.corp.anjuke.com:site/haozu-user"
+    SITE_JINPU_GIT="git@git.corp.anjuke.com:site/jinpu-user"
+    BRANCH_GIT="git@git.corp.anjuke.com:kyouzhang/user-branch"
 
-deploy服务器(app10-089):
+######deploy服务器(app10-089):
 
 * /home/www/release/git 存放a,h,j的代码仓库
 * 创建BIN_ROOT目录,存放shell脚本,/home/evans/release-bin
@@ -97,7 +98,7 @@ deploy服务器(app10-089):
   * release-version-beta.sh
 * 创建log目录/home/evans/release-bin/releaselog
 
-线上服务器:
+######线上服务器:
  
 * /home/www/bin/rsync-from-deploy.sh
 * /home/www/bin/release-version-beta.sh
