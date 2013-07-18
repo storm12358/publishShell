@@ -32,7 +32,7 @@ for app in $SITES_EXT
     fi
     #~ 判断当前分支是不是master
     curr_branch=`git ${DEV_ALIAS} | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`
-    if [ ! $curr_branch=='master' ]; then
+    if [ ! $curr_branch == 'master' ]; then
         echo $curr_branch
         git checkout master 
     fi
