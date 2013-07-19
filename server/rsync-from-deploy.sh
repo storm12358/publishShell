@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#~ 本地和各个服务器都得存在 
-
 version=$1
 appType=$2
 

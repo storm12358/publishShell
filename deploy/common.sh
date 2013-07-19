@@ -7,6 +7,7 @@ writeLog(){
     echo "Date:$Today  Week:$Week Time:$Time $1" >> $LOG_ROOT/$Week.txt
 }
 
+#~ 测试时使用自己的配置文件
 if [ $USER == 'kyou' ]; then
     #!这个依赖好像有点奇怪，是线下的脚本就应该直接定义线下的common，线上的用线上的common，可能他们还有一个公共的common
     . common-dev.sh

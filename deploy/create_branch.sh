@@ -31,7 +31,7 @@ for app in $SITES_EXT
         git remote add ${DEV_ALIAS} $BRANCH_GIT 
     fi
     #~ 判断当前分支是不是master
-    curr_branch=`git ${DEV_ALIAS} | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'` #!这里${DEV_ALIAS}应该是branch，是个命令
+    curr_branch=`git branch | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'` #!这里${DEV_ALIAS}应该是branch，是个命令
     if [ ! $curr_branch == 'master' ]; then
         echo $curr_branch
         git checkout master 
