@@ -9,7 +9,7 @@ fi
 
 #~ 指定上线的app 以逗号分割
 if [ -z $2 ]; then
-    releaseAppList="anjuke"
+    releaseAppList="anjuke" #!TODO一起切换
 else
     param=$2
     releaseAppList=${param//,/ }

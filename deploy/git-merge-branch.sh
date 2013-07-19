@@ -35,6 +35,16 @@ do
     git push origin master:master;
     git branch -D $real_branch;
 
+    #!这里步骤好多啊，看看能不能如下精简
+    #git fetch $DEV_ALIAS $real_branch:$real_branch
+    #git checkout $real_branch
+    #git fetch origin
+    #git rebase origin/master
+    #!这里可能会有冲突～如何去终止？
+    #git push origin $real_branch:master
+    #git checkout master
+    #git branch -D $real_branch
+
 done
 
 

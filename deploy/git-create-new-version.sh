@@ -25,16 +25,19 @@ else
 fi
 
 #~ 指定从master或者branch拉
+#!这个功能目前应该比指定app更常用，建议参数放在前面
 if [ -z $4 ]; then
     alias="origin"
 elif [ $4 = "branch" ]; then
     alias=${DEV_ALIAS}
     #~ 分支
     if [ -z $5 ];then
+        #!提示
         exit
     fi
     branch=$5
 else
+    #!建议提示更清晰，方便未来记录debug
     echo "wrong paramter. exit."
     exit
 fi
@@ -51,8 +54,8 @@ do
         real_branch=${branch}-${app}
         git fetch ${alias}
         git checkout ${real_branch}
-        git rebase ${alias}/${real_branch}
-        git checkout-index -a -f --prefix=$RELEASE_ROOT_TEMP/$app/
+        git rebase ${alias}/${real_branch} #!这里也可以直接使用fetch
+        git checkout-index -a -f --prefix=$RELEASE_ROOT_TEMP/$app/ 
         git checkout master
         git branch -D ${real_branch}
     else
@@ -63,9 +66,9 @@ do
         git push origin --tags
         git checkout-index -a -f --prefix=$RELEASE_ROOT_TEMP/$app/
     fi
-    
+    #!建议上线代码都取出以后，再一起去同步
     string_machines=''
-    appServer=
+    appServer= 
     #~  首字母大写
     upper_app=`echo $app|sed "s/\b[a-z]/\U&/g"`
     servers='arr'$upper_app'AppServer[@]'
